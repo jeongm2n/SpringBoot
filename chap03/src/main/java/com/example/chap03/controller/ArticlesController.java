@@ -3,10 +3,12 @@ package com.example.chap03.controller;
 import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import com.example.chap03.repository.ArticleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@Slf4j
 @Controller
 public class ArticlesController {
 
@@ -20,13 +22,12 @@ public class ArticlesController {
 
     @GetMapping("/articles/create")
     public String createArticle(ArticlesDTO articlesDTO){
-        System.out.println(articlesDTO.toString());
-
+        log.info(articlesDTO.toString());
         Article article = articlesDTO.toEntity();
-        System.out.println(article.toString());
+        log.info(article.toString());
 
         Article saved = articleRepository.save(article);
-        System.out.println(saved.toString());
+        log.info(article.toString());
         return "";
     }
 }
