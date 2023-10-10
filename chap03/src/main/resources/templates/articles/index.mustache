@@ -11,9 +11,9 @@
     <tbody>
     {{#articleList}}
         <tr>
-            <th>{{id}}</th>
-            <td>{{title}}</td>
-            <td>{{content}}</td>
+            <th><a href="/articles/{{id}}/edit">{{id}}</a></th>
+            <td><a href="/articles/{{id}}/edit">{{title}}</a></td>
+            <td><a href="/articles/{{id}}/edit">{{content}}</a></td>
         </tr>
     {{/articleList}}
     </tbody>

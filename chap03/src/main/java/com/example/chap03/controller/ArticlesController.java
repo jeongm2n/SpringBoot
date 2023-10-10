@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -66,5 +67,16 @@ public class ArticlesController {
         Article articleEntity = articleRepository.findById(id).orElse(null);
         model.addAttribute("article", articleEntity);
         return "articles/edit";
+    }
+
+    @PostMapping("/articles/update")
+    public String update(ArticlesDTO artDTO){
+        Article articleEntity = artDTO.toEntity();
+
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        if(target != null){
+            articleRepository.save(articleEntity);
+        }
+        return "redirect:/articles/" + articleEntity.getId();
     }
 }
