@@ -3,6 +3,7 @@ package com.example.chap03.api;
 import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import com.example.chap03.repository.ArticleRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,15 @@ public class FirstApiController {
         target.patch(article);
         Article updated = articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
+    }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Article> delete(@PathVariable Long id){
+        Article target = articleRepository.findById(id).orElse(null);
+        if(target == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        articleRepository.delete(target);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
