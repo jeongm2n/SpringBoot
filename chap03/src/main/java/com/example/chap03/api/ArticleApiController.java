@@ -4,6 +4,7 @@ import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import com.example.chap03.repository.ArticleRepository;
 import com.example.chap03.service.ArticleService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,8 @@ import java.util.List;
 
 @RestController
 public class ArticleApiController {
-//    @Autowired
-//    private ArticleRepository articleRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
 //
 //    @GetMapping("/api/articles")
 //    public List<Article> index(){
@@ -63,5 +64,14 @@ public class ArticleApiController {
     @GetMapping("/api/articles/{id}")
     public Article show(@PathVariable Long id){
         return articleService.show(id);
+    }
+
+    @PostMapping("api/articles")
+    public ResponseEntity<Article> create(@RequestBody ArticlesDTO dto){
+        Article created = articleService.create(dto);
+
+        return (created != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(created) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

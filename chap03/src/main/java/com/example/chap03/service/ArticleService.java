@@ -1,5 +1,6 @@
 package com.example.chap03.service;
 
+import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import com.example.chap03.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,13 @@ public class ArticleService {
 
     public Article show(Long id) {
         return articleRepository.findById(id).orElse(null);
+    }
+
+    public Article create(ArticlesDTO dto) {
+        Article article = dto.toEntity();
+        if(article.getId() != null){
+            return null;
+        }
+        return articleRepository.save(article);
     }
 }
