@@ -28,4 +28,15 @@ public class ArticleService {
         }
         return articleRepository.save(article);
     }
+
+    public Article update(Long id, ArticlesDTO dto) {
+        Article article = dto.toEntity();
+        Article target = articleRepository.findById(id).orElse(null);
+        if(target == null || id != article.getId()){
+            return null;
+        }
+        target.patch(article);
+        Article updated = articleRepository.save(article);
+        return updated;
+    }
 }
