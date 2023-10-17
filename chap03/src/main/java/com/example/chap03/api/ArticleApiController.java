@@ -54,6 +54,7 @@ public class ArticleApiController {
 //        articleRepository.delete(target);
 //        return ResponseEntity.status(HttpStatus.OK).build();
 //    }
+
     @Autowired
     private ArticleService articleService;
     @GetMapping("/api/articles")
@@ -81,6 +82,15 @@ public class ArticleApiController {
 
         return (updated != null) ?
                 ResponseEntity.status(HttpStatus.OK).body(updated) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Article> delete(@PathVariable Long id){
+        Article deleted = articleService.delete(id);
+
+        return (deleted != null) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
