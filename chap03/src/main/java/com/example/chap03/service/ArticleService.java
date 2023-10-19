@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -47,5 +48,20 @@ public class ArticleService {
         }
         articleRepository.delete(target);
         return target;
+    }
+
+    public List<Article> createArticles(List<ArticlesDTO> dtos) {
+        //1. dto 묶음을 엔티티 묶음으로 변환하기(스트림 문법)
+        List<Article> articleList = dtos.stream()
+                .map(dto -> dto.toEntity())
+                .collect(Collectors.toList());
+
+        //2. 엔티티 묶음을 DB에 저장
+        articleList.stream().forEach(article -> articleRepository.save(article));
+
+        //3. 강제 예외 발생시키기 (나중에 롤백 시키기 위함)
+        articleRepository.findById(-1L).orElseThrow(() -> new IllegalArgumentException("결제 실패!"));
+
+        return articleList;
     }
 }
