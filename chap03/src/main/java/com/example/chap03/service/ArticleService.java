@@ -3,6 +3,7 @@ package com.example.chap03.service;
 import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import com.example.chap03.repository.ArticleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,7 @@ public class ArticleService {
         return target;
     }
 
+    @Transactional
     public List<Article> createArticles(List<ArticlesDTO> dtos) {
         //1. dto 묶음을 엔티티 묶음으로 변환하기(스트림 문법)
         List<Article> articleList = dtos.stream()
