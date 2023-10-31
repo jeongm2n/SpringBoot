@@ -1,5 +1,6 @@
 package com.example.chap03.service;
 
+import com.example.chap03.dto.ArticlesDTO;
 import com.example.chap03.entity.Article;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,16 @@ class ArticleServiceTest {
         Article expected = null;
         Article article = articleService.show(id);
         assertEquals(expected,article);
+    }
+
+    @Test
+    void create() {
+        String title = "라라라라";
+        String content = "4444";
+        ArticlesDTO dto = new ArticlesDTO(null,title,content);
+        Article expected = new Article(4L, title, content);
+
+        Article article = articleService.create(dto);
+        assertEquals(expected.toString(), article.toString());
     }
 }
