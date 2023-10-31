@@ -40,5 +40,9 @@ class ArticleServiceTest {
 
     @Test
     void show_실패() {
+        Long id = -1L;
+        Article expected = null;
+        Article article = articleService.show(id);
+        assertEquals(expected,article);
     }
 }
